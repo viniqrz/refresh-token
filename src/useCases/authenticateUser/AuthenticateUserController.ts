@@ -1,4 +1,4 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 class AuthenticateUserController {
@@ -8,9 +8,11 @@ class AuthenticateUserController {
 
     const authenticateUserUseCase = new AuthenticateUserUseCase();
 
-    const token = await authenticateUserUseCase.execute({ username, password });
+    const { token, refreshToken  } = await authenticateUserUseCase.execute(
+      { username, password }
+    );
 
-    return res.json({ token });
+    return res.json({ token, refreshToken });
   }
 }
 
